@@ -7,6 +7,9 @@ import { appointmentCta, primaryNav } from "@/config/navigation";
 import { Wordmark } from "./Wordmark";
 import { MobileMenu } from "./MobileMenu";
 
+/** Pixels of travel in one direction before the header hides or reappears. */
+const SCROLL_THRESHOLD = 16;
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -22,10 +25,19 @@ export function SiteHeader() {
       frame = requestAnimationFrame(() => {
         const y = window.scrollY;
         setScrolled(y > 24);
-        // Hide while scrolling down past the fold; reveal on any upward scroll.
-        setHidden(y > 480 && y > lastY.current + 4);
-        if (y < lastY.current - 4 || y <= 480) setHidden(false);
-        lastY.current = y;
+        // Hide after scrolling down past the fold; reveal after scrolling back up. Direction is measured
+        // from the point of the last change (not frame to frame), so the small per-frame steps at the end
+        // of each smooth-scroll ease can't flip the header back and forth.
+        if (y <= 480) {
+          setHidden(false);
+          lastY.current = y;
+        } else if (y - lastY.current > SCROLL_THRESHOLD) {
+          setHidden(true);
+          lastY.current = y;
+        } else if (lastY.current - y > SCROLL_THRESHOLD) {
+          setHidden(false);
+          lastY.current = y;
+        }
       });
     };
     onScroll();
