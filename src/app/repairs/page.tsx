@@ -35,7 +35,7 @@ export default function RepairsPage() {
 
       <section aria-labelledby="repair-services" className="py-24 md:py-36">
         <div className="shell mb-16">
-          <h2 id="repair-services" className="t-h1 uppercase">
+          <h2 id="repair-services" data-reveal="lines" className="t-h1">
             Repair services
           </h2>
         </div>

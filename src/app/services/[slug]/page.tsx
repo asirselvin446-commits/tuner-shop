@@ -48,7 +48,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </div>
 
           <section aria-labelledby="involves" className="mt-20">
-            <h2 id="involves" className="t-h2 uppercase md:text-[clamp(2rem,3vw,2.875rem)]">
+            <h2 id="involves" data-reveal="lines" className="t-h2 md:text-[clamp(2rem,3vw,2.875rem)]">
               What it involves
             </h2>
             <ol className="mt-8 border-t border-gunmetal">
@@ -62,7 +62,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </section>
 
           <section aria-labelledby="signs" className="mt-20">
-            <h2 id="signs" className="t-h2 uppercase md:text-[clamp(2rem,3vw,2.875rem)]">
+            <h2 id="signs" data-reveal="lines" className="t-h2 md:text-[clamp(2rem,3vw,2.875rem)]">
               When people ask for it
             </h2>
             <ul className="mt-8 space-y-3">

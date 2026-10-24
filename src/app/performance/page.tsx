@@ -50,7 +50,7 @@ export default function PerformancePage() {
 
       <section aria-labelledby="principles" className="shell py-24 md:py-36">
         <div className="grid-12 gap-y-12">
-          <h2 id="principles" className="t-h2 col-span-4 uppercase md:col-span-4">
+          <h2 id="principles" data-reveal="lines" className="t-h2 col-span-4 md:col-span-4">
             Before any calibration
           </h2>
           <ol className="col-span-4 grid gap-x-10 gap-y-12 sm:grid-cols-2 md:col-span-7 md:col-start-6">

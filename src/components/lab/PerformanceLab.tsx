@@ -69,7 +69,7 @@ export function PerformanceLab({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
     <div ref={root} className="relative">
       <div className="grid-12 gap-y-10">
         <div className="col-span-4 md:col-span-8 xl:col-span-4">
-          <Heading className="t-h2 uppercase xl:text-[clamp(1.75rem,2.6vw,2.875rem)]">Performance lab</Heading>
+          <Heading data-reveal="lines" className="t-h2 xl:text-[clamp(1.75rem,2.6vw,2.875rem)]">Performance lab</Heading>
           <p className="mt-5 text-alloy text-pretty">
             Measured power and torque, before and after calibration work, with the test conditions that make the numbers meaningful.
           </p>

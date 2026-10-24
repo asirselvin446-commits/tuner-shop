@@ -58,7 +58,7 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className="relative py-2 text-[0.9375rem] font-[520] text-alloy transition-colors hover:text-titanium aria-[current=page]:text-titanium"
+                    className="relative py-2 text-[0.9375rem] font-[520] text-alloy transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-titanium after:transition-transform after:duration-500 after:ease-[var(--ease-shutter)] hover:text-titanium hover:after:origin-left hover:after:scale-x-100 aria-[current=page]:text-titanium aria-[current=page]:after:hidden"
                     style={{ fontStretch: "104%" }}
                   >
                     {item.label}

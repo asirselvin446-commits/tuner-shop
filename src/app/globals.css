@@ -228,12 +228,17 @@
     line-height: 1.2;
     padding-block: 0.75rem;
     border: 1px solid transparent;
+    /* Fill wipe: enters from the left on hover, leaves to the right on mouse-out. */
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: 100% 0;
     transition:
-      background-color 0.25s ease,
-      color 0.25s ease,
-      border-color 0.25s ease;
+      background-size 0.5s var(--ease-shutter),
+      color 0.3s ease 0.08s,
+      border-color 0.3s ease;
     -webkit-tap-highlight-color: transparent;
   }
+
 
   @media (min-width: 640px) {
     .btn {
@@ -242,34 +247,52 @@
   }
 
   .btn-primary {
-    background: var(--color-signal);
+    background-color: var(--color-signal);
+    background-image: linear-gradient(var(--color-titanium), var(--color-titanium));
     color: #fff;
     /* Machined corner cut instead of a rounded pill. */
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
   }
 
-  .btn-primary:hover {
-    background: #a50d26;
-  }
 
   .btn-ghost {
+    background-image: linear-gradient(var(--color-titanium), var(--color-titanium));
     border-color: color-mix(in srgb, var(--color-titanium) 35%, transparent);
     color: var(--color-titanium);
   }
 
-  .btn-ghost:hover {
-    border-color: var(--color-titanium);
-    background: color-mix(in srgb, var(--color-titanium) 6%, transparent);
+
+  .lab .btn-primary {
+    background-image: linear-gradient(var(--color-lab-ink), var(--color-lab-ink));
   }
 
+
   .lab .btn-ghost {
+    background-image: linear-gradient(var(--color-lab-ink), var(--color-lab-ink));
     border-color: color-mix(in srgb, var(--color-lab-ink) 40%, transparent);
     color: var(--color-lab-ink);
   }
 
-  .lab .btn-ghost:hover {
-    border-color: var(--color-lab-ink);
-    background: color-mix(in srgb, var(--color-lab-ink) 6%, transparent);
+
+  @media (hover: hover) {
+    .btn:hover {
+      background-size: 100% 100%;
+      background-position: 0 0;
+    }
+    .btn-primary:hover {
+      color: var(--color-asphalt);
+    }
+    .btn-ghost:hover {
+      border-color: var(--color-titanium);
+      color: var(--color-asphalt);
+    }
+    .lab .btn-primary:hover {
+      color: var(--color-lab);
+    }
+    .lab .btn-ghost:hover {
+      border-color: var(--color-lab-ink);
+      color: var(--color-lab);
+    }
   }
 
   .link-underline {
@@ -435,6 +458,20 @@ html.js:not(.reduce-motion) [data-hero-still] {
   animation: scroll-cue 2.2s var(--ease-shutter) infinite;
 }
 
+.scroll-cue-x {
+  animation: scroll-cue-x 2.2s var(--ease-shutter) infinite;
+}
+
+@keyframes scroll-cue-x {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(200%);
+  }
+}
+
 @keyframes scroll-cue {
   0% {
     transform: translateY(-100%);
@@ -450,14 +487,14 @@ html.js:not(.reduce-motion) [data-hero-still] {
   font-family: var(--font-sans);
   font-stretch: 108%;
   font-weight: 620;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .t-svg-note {
   font-family: var(--font-sans);
   font-stretch: 72%;
   font-weight: 520;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.02em;
 }
 
@@ -641,4 +678,27 @@ html.js:not(.reduce-motion) .story-progress {
 
 .lab-range:focus-visible {
   outline-offset: 0;
+}
+
+/* ───────────────────────────── Film grain ─────────────────────────────
+   A static noise layer (no animation, no repaint on scroll) to take the digital flatness off the blacks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media print, (forced-colors: active) {
+  body::after {
+    display: none;
+  }
+}
+
+/* Diagnostic steps: the number of each reached step takes the signal colour. */
+.lab li.is-reached .step-index {
+  color: var(--color-signal);
 }

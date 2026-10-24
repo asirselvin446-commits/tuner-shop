@@ -29,7 +29,7 @@ export function ServiceIndex() {
     <section aria-labelledby="services-title" className="relative bg-asphalt py-24 md:py-36">
       <div className="shell">
         <div className="grid-12 gap-y-8">
-          <h2 id="services-title" className="t-h1 col-span-4 uppercase md:col-span-8">
+          <h2 id="services-title" data-reveal="lines" className="t-h1 col-span-4 md:col-span-8">
             Services
           </h2>
           <p className="t-lead col-span-4 max-w-[40ch] self-end text-alloy md:col-span-4">
@@ -63,7 +63,7 @@ export function ServiceIndex() {
                             className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-2 py-6 md:py-7"
                           >
                             <span
-                              className={`text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[0.95] font-[760] uppercase transition-colors duration-300 [font-stretch:100%] md:[font-stretch:120%] ${isActive ? "md:text-titanium" : "md:text-[#7a8088]"} group-hover:text-titanium`}
+                              className={`text-[clamp(1.75rem,3.4vw,3.125rem)] leading-[1] tracking-[-0.02em] font-[700] transition-colors duration-300 [font-stretch:104%] md:[font-stretch:118%] ${isActive ? "md:text-titanium" : "md:text-[#7a8088]"} group-hover:text-titanium`}
                             >
                               {s.name}
                             </span>

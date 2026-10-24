@@ -117,19 +117,6 @@ export function Hero() {
         <div data-slit className="absolute inset-x-0 top-1/2 h-px origin-center bg-titanium/80" />
       </div>
 
-      {/* Minimal technical metadata doubling as service entry points. */}
-      <nav aria-label="Services" data-hero-item="meta" className="shell relative z-10 mt-[calc(var(--header-h)+2.5rem)] hidden justify-end md:flex">
-        <ul className="w-[220px] border-l border-gunmetal pl-5">
-          {services.map((s) => (
-            <li key={s.slug}>
-              <Link href={`/services/${s.slug}`} className="t-note block py-1 transition-colors hover:text-titanium">
-                {s.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
       <div data-copy className="shell relative z-10 mt-auto pb-10 md:pb-14">
         <h1 id="hero-title" data-hero-item="headline" className="t-hero">
           {hero.headline.map((line, i) => (
@@ -143,10 +130,10 @@ export function Hero() {
         </h1>
 
         <div className="grid-12 mt-8 items-end gap-y-7 md:mt-10">
-          <p data-hero-item="support" className="t-lead col-span-4 max-w-[38ch] text-pretty md:col-span-12 lg:col-span-5">
+          <p data-hero-item="support" className="t-lead col-span-4 max-w-[38ch] text-pretty md:col-span-12 lg:col-span-4">
             {hero.support}
           </p>
-          <div data-hero-item="cta" className="col-span-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:col-span-10 lg:col-span-5 lg:col-start-6">
+          <div data-hero-item="cta" className="col-span-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:col-span-10 lg:col-span-5 lg:col-start-5">
             <Link href={hero.primaryCta.href} className="btn btn-primary">
               {hero.primaryCta.label}
             </Link>
@@ -154,19 +141,37 @@ export function Hero() {
               {hero.secondaryCta.label}
             </Link>
           </div>
-          <a href="#story" data-hero-item="cue" className="col-span-2 hidden items-center justify-end gap-3 lg:col-start-11 lg:flex">
-            <span className="t-note">Scroll</span>
-            <span aria-hidden="true" className="relative block h-10 w-px overflow-hidden bg-gunmetal">
-              <span className="scroll-cue absolute inset-x-0 top-0 h-1/2 bg-signal" />
-            </span>
-          </a>
+          {/* Service entry points, kept off the vehicle and aligned with the CTAs. */}
+          <nav aria-label="Services" data-hero-item="meta" className="hidden lg:col-span-3 lg:col-start-10 lg:block">
+            <ul className="grid grid-cols-2 gap-x-5 border-t border-gunmetal pt-3">
+              {services.map((s) => (
+                <li key={s.slug}>
+                  <Link href={`/services/${s.slug}`} className="t-note block py-1 transition-colors hover:text-titanium">
+                    {s.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
+
+      <a
+        href="#story"
+        data-hero-item="cue"
+        aria-label="Scroll to the vehicle story"
+        className="absolute right-[var(--gutter)] bottom-4 z-10 hidden items-center gap-3 lg:flex"
+      >
+        <span className="t-note">Scroll</span>
+        <span aria-hidden="true" className="relative block h-px w-10 overflow-hidden bg-gunmetal">
+          <span className="scroll-cue-x absolute inset-y-0 left-0 w-1/2 bg-signal" />
+        </span>
+      </a>
 
       {/* Restrained red rim light along the studio floor line. */}
       <div aria-hidden="true" data-rim className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-px origin-left bg-[linear-gradient(90deg,transparent,var(--color-signal)_30%,var(--color-signal)_70%,transparent)] opacity-80" />
 
-      {business.media.illustrative && <span className="media-tag !bottom-auto !left-auto right-3 top-[calc(var(--header-h)+0.75rem)] md:hidden">Illustrative</span>}
+      {business.media.illustrative && <span className="media-tag !bottom-auto !left-auto right-[var(--gutter)] top-[calc(var(--header-h)+0.75rem)] z-10">Illustrative</span>}
     </section>
   );
 }

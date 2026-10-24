@@ -17,6 +17,8 @@ interface MediaProps {
   objectPosition?: string;
   /** Hide the "Illustrative" tag (e.g. when a caption already says so). */
   hideTag?: boolean;
+  /** Open with the shutter reveal when scrolled into view. */
+  reveal?: boolean;
   onReady?: () => void;
 }
 
@@ -25,7 +27,7 @@ interface MediaProps {
  * with reduced motion, or with Save-Data on). The video is fetched only near the viewport, swapped in
  * once it can play, and paused whenever it leaves the screen or the tab is hidden.
  */
-export function Media({ id, sizes, className = "", priority, motion = true, objectPosition = "50% 50%", hideTag, onReady }: MediaProps) {
+export function Media({ id, sizes, className = "", priority, motion = true, objectPosition = "50% 50%", hideTag, reveal, onReady }: MediaProps) {
   const item = media[id];
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -66,7 +68,7 @@ export function Media({ id, sizes, className = "", priority, motion = true, obje
   }, [motion, video]);
 
   return (
-    <div ref={wrapRef} className={`relative overflow-hidden bg-graphite ${className}`}>
+    <div ref={wrapRef} data-reveal={reveal ? "media" : undefined} className={`relative overflow-hidden bg-graphite ${className}`}>
       <Image
         src={item.poster}
         alt={item.alt}

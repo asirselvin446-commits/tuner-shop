@@ -55,8 +55,10 @@ export function VehicleStory() {
         });
 
         // Network diagram builds with the narrative.
-        tl.fromTo(q(".bus-line"), { strokeDashoffset: 1, strokeDasharray: "1 1" }, { strokeDashoffset: 0, duration: 0.5 }, 0.05)
-          .fromTo(q("[data-node]"), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05 }, 0.15)
+        // The diagram panel arrives with the network instead of sitting empty.
+        tl.fromTo(q("[data-diagram]"), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.12, ease: "power2.out" }, 0.02);
+        tl.fromTo(q(".bus-line"), { strokeDashoffset: 1, strokeDasharray: "1 1" }, { strokeDashoffset: 0, duration: 0.35 }, 0.04)
+          .fromTo(q("[data-node]"), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.25, stagger: 0.04 }, 0.08)
           .fromTo(q("[data-node-box='ecu']"), { fill: "#17191c" }, { fill: "#3a0c14", duration: 0.25 }, 1)
           .fromTo(q("[data-ecu-detail]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 1.05)
           .fromTo(q("[data-tool]"), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3 }, 2)

@@ -24,7 +24,7 @@ export function WorkFramework({ headingLevel = 2, limit }: { headingLevel?: 2 | 
   return (
     <div className="grid-12 gap-y-12">
       <div className="col-span-4 md:col-span-5">
-        <Heading className="t-h1 uppercase">Our work</Heading>
+        <Heading data-reveal="lines" className="t-h1">Our work</Heading>
         {studies.length === 0 ? (
           <>
             <p className="t-lead mt-6 max-w-[36ch] text-alloy">

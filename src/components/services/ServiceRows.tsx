@@ -16,11 +16,11 @@ export function ServiceRows({ items }: { items: Service[] }) {
           <li key={s.slug} className="shell">
             <article className="grid-12 items-center gap-y-8">
               <div className={`col-span-4 md:col-span-12 ${flip ? "lg:order-2 lg:col-span-6 lg:col-start-7" : "lg:col-span-7"}`}>
-                <Media id={s.media} sizes="(min-width: 768px) 55vw, 100vw" className={flip ? "aspect-[4/5] md:aspect-[5/6]" : "aspect-[16/10]"} />
+                <Media id={s.media} reveal sizes="(min-width: 768px) 55vw, 100vw" className={flip ? "aspect-[4/5] md:aspect-[5/6]" : "aspect-[16/10]"} />
               </div>
               <div className={`col-span-4 md:col-span-8 ${flip ? "lg:order-1 lg:col-span-5" : "lg:col-span-4 lg:col-start-9"}`}>
                 <p className="t-note">{s.annotation}</p>
-                <h3 className="t-h2 mt-3 uppercase text-balance lg:text-[clamp(2rem,3.1vw,3.25rem)]">{s.name}</h3>
+                <h3 data-reveal="lines" className="t-h2 mt-3 text-balance lg:text-[clamp(2rem,3.1vw,3.25rem)]">{s.name}</h3>
                 <p className="mt-5 text-alloy text-pretty">{s.summary}</p>
                 <ul className="mt-6 space-y-2 border-t border-gunmetal pt-5 text-[0.9375rem] text-alloy">
                   {s.involves.slice(0, 3).map((item) => (

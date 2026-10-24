@@ -26,7 +26,7 @@ export function CaseStudyArticle({ study, isTemplate = false }: { study: CaseStu
             Our work
           </Link>
         </p>
-        <h1 className="t-h1 mt-4 max-w-[18ch] uppercase text-balance">{study.title}</h1>
+        <h1 data-reveal="lines" className="t-h1 mt-4 max-w-[18ch] text-balance">{study.title}</h1>
         <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-gunmetal pt-6 md:grid-cols-4">
           <div>
             <dt className="t-note">Vehicle</dt>

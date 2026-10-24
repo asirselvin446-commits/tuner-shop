@@ -12,7 +12,7 @@ export function ClosingCta({ title = "Tell us what the car is doing." }: { title
       </div>
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--color-asphalt)_10%,color-mix(in_srgb,var(--color-asphalt)_55%,transparent)_60%,transparent)]" />
       <div className="shell py-28 md:py-44">
-        <h2 id="closing-title" className="t-h1 max-w-[13ch] uppercase text-balance">
+        <h2 id="closing-title" data-reveal="lines" className="t-h1 max-w-[13ch] uppercase text-balance">
           {title}
         </h2>
         <p className="t-lead mt-6 max-w-[42ch] text-alloy">

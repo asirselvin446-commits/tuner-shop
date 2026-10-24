@@ -3,6 +3,7 @@ import { business, contactChannels, displayName, formatAddress } from "@/config/
 import { appointmentCta, primaryNav } from "@/config/navigation";
 import { publishedServices } from "@/content/services";
 import { OpeningHours } from "@/components/contact/OpeningHours";
+import { Wordmark } from "./Wordmark";
 
 export function SiteFooter() {
   const channels = contactChannels();
@@ -12,9 +13,12 @@ export function SiteFooter() {
     <footer id="site-footer" className="relative border-t border-gunmetal bg-asphalt pt-20 pb-10 md:pt-28">
       <div className="shell">
         <div className="grid-12 gap-y-14">
-          <div className="col-span-4 md:col-span-6">
-            <p className="t-h2 max-w-[14ch] uppercase text-balance">Diagnose first. Then calibrate.</p>
-            <Link href={appointmentCta.href} className="btn btn-primary mt-10">
+          <div className="col-span-4 md:col-span-5">
+            <Wordmark />
+            <p className="mt-6 max-w-[38ch] text-alloy">
+              Engine calibration, control-module coding and repair, DPF service and vehicle software updates.
+            </p>
+            <Link href={appointmentCta.href} className="link-underline mt-6 inline-block text-[0.9375rem] font-[600]">
               {appointmentCta.label}
             </Link>
           </div>
@@ -91,9 +95,14 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 text-[0.8125rem] text-alloy md:flex-row md:items-end md:justify-between">
-          <p>
-            © {year} {displayName()}
-          </p>
+          <div className="flex items-center gap-6">
+            <p>
+              © {year} {displayName()}
+            </p>
+            <a href="#main" className="link-underline text-titanium">
+              Back to top
+            </a>
+          </div>
           <div className="max-w-[70ch] space-y-1.5 md:text-right">
             {business.media.illustrative && <p>Photography and video on this site are illustrative and do not show customer vehicles.</p>}
             <p>Tuning results vary with vehicle, hardware, fuel, condition, calibration and measurement method.</p>

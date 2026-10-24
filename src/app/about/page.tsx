@@ -32,7 +32,7 @@ export default function AboutPage() {
 
       <section aria-labelledby="approach" className="shell py-24 md:py-36">
         <div className="grid-12 gap-y-12">
-          <h2 id="approach" className="t-h1 col-span-4 uppercase md:col-span-5">
+          <h2 id="approach" data-reveal="lines" className="t-h1 col-span-4 md:col-span-5">
             How the work is approached
           </h2>
           <ul className="col-span-4 border-t border-gunmetal md:col-span-6 md:col-start-7">
