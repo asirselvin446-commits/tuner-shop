@@ -13,3 +13,7 @@ npm-debug.log*
 _source-media/
 *.zip
 .playwright-mcp/
+
+.vercel
+.env*
+!.env.example
