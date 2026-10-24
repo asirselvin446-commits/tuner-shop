@@ -1,0 +1,644 @@
+@import "tailwindcss";
+
+/* ───────────────────────────── Tokens ───────────────────────────── */
+@theme {
+  --color-asphalt: #0c0d0f;      /* page base */
+  --color-graphite: #17191c;     /* raised surfaces */
+  --color-gunmetal: #2e3237;     /* rules, borders */
+  --color-steel: #5b6168;        /* decorative only — fails text contrast */
+  --color-alloy: #9ba1a8;        /* secondary text, 7.4:1 on asphalt */
+  --color-titanium: #e6e8ea;     /* primary text */
+  --color-signal: #c8102e;       /* racing red — fills and large marks */
+  --color-signal-text: #f0384f;  /* red for small text on dark, ≥4.5:1 */
+  --color-lab: #d6d9dc;          /* diagnostics section ground */
+  --color-lab-rule: #b3b8bd;
+  --color-lab-ink: #15171a;
+  --color-lab-muted: #474c52;
+
+  --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-shutter: cubic-bezier(0.77, 0, 0.18, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --gutter: clamp(16px, 4vw, 56px);
+  --header-h: 72px;
+  color-scheme: dark;
+}
+
+/* ───────────────────────────── Base ───────────────────────────── */
+@layer base {
+  html {
+    background: var(--color-asphalt);
+    color: var(--color-titanium);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    background: var(--color-asphalt);
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal-text);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .lab :focus-visible {
+    outline-color: var(--color-signal);
+  }
+
+  img,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Native smooth anchor scrolling only when Lenis is not handling it. */
+  html:not(.has-lenis) {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:not(.has-lenis) {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ───────────────────────────── Typography ───────────────────────────── */
+@layer components {
+  /* Expanded heavy display — the motorsport livery voice. */
+  .t-display {
+    font-stretch: 125%;
+    font-weight: 820;
+    line-height: 0.86;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    font-size: clamp(2.75rem, 9.2vw, 10.5rem);
+  }
+
+  /* Hero headline: sized so its longest line always fits — wraps on phones, one line per row above. */
+  .t-hero {
+    font-stretch: 100%;
+    font-weight: 830;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    font-size: clamp(2.25rem, 10vw, 4.75rem);
+  }
+
+  @media (min-width: 768px) {
+    .t-hero {
+      font-stretch: 125%;
+      line-height: 0.86;
+      white-space: nowrap;
+      font-size: min(5.75vw, 6.3rem);
+    }
+  }
+
+  .t-h1 {
+    font-stretch: 125%;
+    font-weight: 780;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    font-size: clamp(2.5rem, 6.4vw, 6.75rem);
+  }
+
+  .t-h2 {
+    font-stretch: 118%;
+    font-weight: 740;
+    line-height: 0.98;
+    letter-spacing: -0.018em;
+    font-size: clamp(2rem, 4.4vw, 4.5rem);
+  }
+
+  .t-h3 {
+    font-stretch: 110%;
+    font-weight: 680;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.375rem, 2vw, 1.875rem);
+  }
+
+  /* Expanded widths are reserved for wider screens; long words must fit a 320px phone. */
+  @media (max-width: 767px) {
+    .t-display,
+    .t-h1 {
+      font-stretch: 100%;
+    }
+    .t-h1 {
+      font-size: clamp(1.875rem, 9.6vw, 3.5rem);
+    }
+    .t-h2 {
+      font-stretch: 104%;
+    }
+  }
+
+  .t-lead {
+    font-size: clamp(1.125rem, 1.45vw, 1.375rem);
+    line-height: 1.5;
+    font-weight: 380;
+    color: var(--color-titanium);
+  }
+
+  /* Condensed technical annotation — replaces a monospace face. */
+  .t-note {
+    font-stretch: 72%;
+    font-weight: 520;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    letter-spacing: 0.015em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-alloy);
+  }
+
+  .t-index {
+    font-stretch: 72%;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  .measure {
+    max-width: 62ch;
+  }
+
+  /* ───────────────────────────── Layout ───────────────────────────── */
+  .shell {
+    width: 100%;
+    max-width: 1680px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: clamp(12px, 2vw, 32px);
+  }
+
+  @media (min-width: 768px) {
+    .grid-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  .rule {
+    border: 0;
+    height: 1px;
+    background: var(--color-gunmetal);
+  }
+
+  /* ───────────────────────────── Controls ───────────────────────────── */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 52px;
+    padding: 0 1.5rem;
+    font-stretch: 112%;
+    font-weight: 650;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    text-align: center;
+    line-height: 1.2;
+    padding-block: 0.75rem;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (min-width: 640px) {
+    .btn {
+      white-space: nowrap;
+    }
+  }
+
+  .btn-primary {
+    background: var(--color-signal);
+    color: #fff;
+    /* Machined corner cut instead of a rounded pill. */
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  }
+
+  .btn-primary:hover {
+    background: #a50d26;
+  }
+
+  .btn-ghost {
+    border-color: color-mix(in srgb, var(--color-titanium) 35%, transparent);
+    color: var(--color-titanium);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--color-titanium);
+    background: color-mix(in srgb, var(--color-titanium) 6%, transparent);
+  }
+
+  .lab .btn-ghost {
+    border-color: color-mix(in srgb, var(--color-lab-ink) 40%, transparent);
+    color: var(--color-lab-ink);
+  }
+
+  .lab .btn-ghost:hover {
+    border-color: var(--color-lab-ink);
+    background: color-mix(in srgb, var(--color-lab-ink) 6%, transparent);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 0.35s var(--ease-out-expo);
+  }
+
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  .skip-link {
+    position: fixed;
+    left: var(--gutter);
+    top: 12px;
+    z-index: 100;
+    transform: translateY(-200%);
+    background: var(--color-titanium);
+    color: var(--color-asphalt);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  /* Tag shown on illustrative media. */
+  .media-tag {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
+    padding: 4px 8px;
+    background: color-mix(in srgb, var(--color-asphalt) 78%, transparent);
+    color: var(--color-titanium);
+    font-stretch: 72%;
+    font-weight: 560;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+
+  /* Field styles for the enquiry form. */
+  .field-label {
+    display: block;
+    font-stretch: 105%;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75rem 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-steel);
+    color: var(--color-titanium);
+    font-size: 1.0625rem;
+    border-radius: 0;
+    transition: border-color 0.2s ease;
+  }
+
+  .field-input::placeholder {
+    color: color-mix(in srgb, var(--color-alloy) 70%, transparent);
+  }
+
+  .field-input:hover {
+    border-bottom-color: var(--color-alloy);
+  }
+
+  .field-input:focus-visible {
+    outline: none;
+    border-bottom-color: var(--color-signal-text);
+    box-shadow: 0 1px 0 0 var(--color-signal-text);
+  }
+
+  .field-input[aria-invalid="true"] {
+    border-bottom-color: var(--color-signal-text);
+  }
+
+  select.field-input {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-alloy) 50%),
+      linear-gradient(135deg, var(--color-alloy) 50%, transparent 50%);
+    background-position: calc(100% - 14px) 50%, calc(100% - 9px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  select.field-input option {
+    background: var(--color-graphite);
+    color: var(--color-titanium);
+  }
+
+  textarea.field-input {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .field-error {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-signal-text);
+  }
+}
+
+/* ───────────────────────────── Reveal states ─────────────────────────────
+   Elements are hidden only when JS is running and motion is allowed. A CSS failsafe reveals them
+   after 3.5s in case scripts fail after the `js` class is set. */
+@layer utilities {
+  html.js:not(.reduce-motion) [data-hero-item] {
+    opacity: 0;
+    animation: failsafe-reveal 0s linear 3.5s forwards;
+  }
+
+  @keyframes failsafe-reveal {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* ───────────────────────────── Hero ───────────────────────────── */
+.hero-shutter {
+  display: none;
+}
+
+html.js:not(.reduce-motion) .hero-shutter {
+  display: block;
+  animation: failsafe-hide 0s linear 3.5s forwards;
+}
+
+html.js:not(.reduce-motion) [data-hero-still] {
+  opacity: 0;
+  animation: failsafe-reveal 0s linear 3.5s forwards;
+}
+
+@keyframes failsafe-hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.scroll-cue {
+  animation: scroll-cue 2.2s var(--ease-shutter) infinite;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+/* ───────────────────────────── SVG type ───────────────────────────── */
+.t-svg-label {
+  font-family: var(--font-sans);
+  font-stretch: 108%;
+  font-weight: 620;
+  font-size: 13px;
+}
+
+.t-svg-note {
+  font-family: var(--font-sans);
+  font-stretch: 72%;
+  font-weight: 520;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+/* ───────────────────────────── Vehicle story ─────────────────────────────
+   Static by default (no JS / reduced motion): stacked chapters under a still.
+   With motion: a sticky full-viewport frame over a tall scroll track. */
+.story-stage {
+  position: relative;
+  height: 58svh;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.story-scrim {
+  background: linear-gradient(to top, var(--color-asphalt), transparent 45%);
+}
+
+.story-ui {
+  position: relative;
+  display: grid;
+  gap: 4rem;
+  padding-block: 3rem 5rem;
+}
+
+.story-chapters {
+  display: grid;
+  gap: 4.5rem;
+}
+
+.story-diagram {
+  max-width: 460px;
+}
+
+.story-progress {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .story-ui {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+html.js:not(.reduce-motion) .story-track {
+  height: calc(var(--chapters) * 95svh);
+}
+
+html.js:not(.reduce-motion) .story-frame {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+html.js:not(.reduce-motion) .story-stage {
+  position: absolute;
+  inset: 0;
+  height: auto;
+  min-height: 0;
+}
+
+html.js:not(.reduce-motion) .story-scrim {
+  background:
+    linear-gradient(to bottom, var(--color-asphalt) 12%, transparent 24%),
+    linear-gradient(to top, var(--color-asphalt) 34%, color-mix(in srgb, var(--color-asphalt) 60%, transparent) 52%, transparent 72%);
+}
+
+html.js:not(.reduce-motion) .story-ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-block: calc(var(--header-h) + 1rem) 4.5rem;
+}
+
+html.js:not(.reduce-motion) .story-chapters {
+  position: relative;
+  display: block;
+  height: 26rem;
+}
+
+html.js:not(.reduce-motion) .story-chapter {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+}
+
+html.js:not(.reduce-motion) .story-diagram {
+  display: none;
+}
+
+html.js:not(.reduce-motion) .story-progress {
+  display: block;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  html.js:not(.reduce-motion) .story-track {
+    height: calc(var(--chapters) * 105svh);
+  }
+
+  html.js:not(.reduce-motion) .story-scrim {
+    background:
+      linear-gradient(to right, color-mix(in srgb, var(--color-asphalt) 88%, transparent) 0%, color-mix(in srgb, var(--color-asphalt) 40%, transparent) 34%, transparent 52%),
+      linear-gradient(to left, color-mix(in srgb, var(--color-asphalt) 80%, transparent) 0%, transparent 34%),
+      linear-gradient(to top, var(--color-asphalt) 0%, transparent 22%);
+  }
+
+  html.js:not(.reduce-motion) .story-ui {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(12px, 2vw, 32px);
+    align-items: center;
+    padding-block: var(--header-h) 5rem;
+  }
+
+  html.js:not(.reduce-motion) .story-chapters {
+    grid-column: 1 / span 5;
+    height: 30rem;
+  }
+
+  html.js:not(.reduce-motion) .story-chapter {
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  html.js:not(.reduce-motion) .story-diagram {
+    display: block;
+    grid-column: 9 / span 4;
+    justify-self: end;
+    width: 100%;
+    max-width: 420px;
+    padding: 20px 20px 16px;
+    background: color-mix(in srgb, var(--color-asphalt) 84%, transparent);
+    border: 1px solid var(--color-gunmetal);
+  }
+}
+
+/* ───────────────────────────── Range input (Performance lab) ───────────────────────────── */
+.lab-range {
+  appearance: none;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lab-range::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--color-steel);
+}
+
+.lab-range::-moz-range-track {
+  height: 1px;
+  background: var(--color-steel);
+}
+
+.lab-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -8.5px;
+  background: var(--color-titanium);
+  border: 3px solid var(--color-asphalt);
+  box-shadow: 0 0 0 1px var(--color-titanium);
+}
+
+.lab-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--color-titanium);
+  border: 3px solid var(--color-asphalt);
+  border-radius: 0;
+  box-shadow: 0 0 0 1px var(--color-titanium);
+}
+
+.lab-range:focus-visible {
+  outline-offset: 0;
+}

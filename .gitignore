@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
+.env
+npm-debug.log*
+.DS_Store
+
+# Original high-bitrate clips; processed copies live in public/media
+_source-media/
+*.zip
+.playwright-mcp/
