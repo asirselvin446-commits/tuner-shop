@@ -1,15 +1,7 @@
 /**
- * Enquiry form schema and validation, shared by the browser and the API route.
+ * Booking form schema and validation, shared by the browser and the API route.
  */
 import { services } from "@/content/services";
-
-export const contactMethods = [
-  { value: "phone", label: "Phone call" },
-  { value: "whatsapp", label: "WhatsApp" },
-  { value: "email", label: "Email" },
-] as const;
-
-export type ContactMethod = (typeof contactMethods)[number]["value"];
 
 export const serviceOptions: { value: string; label: string }[] = [
   { value: "diagnosis", label: "Diagnosis: fault or warning light" },
@@ -19,8 +11,7 @@ export const serviceOptions: { value: string; label: string }[] = [
 
 export interface Enquiry {
   name: string;
-  contactMethod: ContactMethod;
-  contactValue: string;
+  mobile: string;
   make: string;
   model: string;
   year: string;
@@ -31,9 +22,22 @@ export interface Enquiry {
 export type EnquiryField = keyof Enquiry;
 export type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 
-export const fieldOrder: EnquiryField[] = ["name", "contactMethod", "contactValue", "make", "model", "year", "service", "message"];
+export const fieldOrder: EnquiryField[] = ["name", "mobile", "make", "model", "year", "service", "message"];
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+/**
+ * Accepts Indian mobile numbers as people type them — 10 digits starting 6–9, with or without a
+ * +91 / 91 / 0 prefix, spaces or dashes — and international numbers written with a leading "+".
+ */
+function mobileError(v: string): string | undefined {
+  if (!v) return "Enter your mobile number.";
+  if (!/^[+\d\s().-]+$/.test(v)) return "Use digits only, for example 98765 43210.";
+  const digits = v.replace(/\D/g, "");
+  const local = digits.replace(/^(91|0)(?=\d{10}$)/, "");
+  if (/^[6-9]\d{9}$/.test(local)) return;
+  if (v.startsWith("+") && digits.length >= 8 && digits.length <= 15) return;
+  return "Enter a 10-digit mobile number, for example 98765 43210.";
+}
+
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
 export function validateField(field: EnquiryField, values: Partial<Record<EnquiryField, unknown>>): string | undefined {
@@ -44,22 +48,8 @@ export function validateField(field: EnquiryField, values: Partial<Record<Enquir
       if (v.length < 2) return "Enter your name.";
       if (v.length > 80) return "Name must be 80 characters or fewer.";
       return;
-    case "contactMethod":
-      if (!contactMethods.some((m) => m.value === v)) return "Choose how you’d like to be contacted.";
-      return;
-    case "contactValue": {
-      const method = str(values.contactMethod);
-      if (method === "email") {
-        if (!EMAIL.test(v)) return "Enter an email address, like name@example.com.";
-        if (v.length > 120) return "Email must be 120 characters or fewer.";
-        return;
-      }
-      const digits = v.replace(/\D/g, "");
-      if (!/^[+\d\s().-]*$/.test(v) || digits.length < 7 || digits.length > 15) {
-        return "Enter a phone number with 7 to 15 digits, including the country code if you’re outside the country.";
-      }
-      return;
-    }
+    case "mobile":
+      return mobileError(v);
     case "make":
       if (!v) return "Enter the vehicle make, for example Volkswagen.";
       if (v.length > 40) return "Make must be 40 characters or fewer.";
@@ -100,10 +90,9 @@ export function validateEnquiry(values: Partial<Record<EnquiryField, unknown>>):
 /** Plain-text summary a visitor can copy if online delivery isn't available. */
 export function enquirySummary(e: Partial<Enquiry>): string {
   const service = serviceOptions.find((o) => o.value === e.service)?.label ?? e.service;
-  const method = contactMethods.find((m) => m.value === e.contactMethod)?.label ?? e.contactMethod;
   return [
     `Name: ${e.name ?? ""}`,
-    `Contact: ${method ?? ""} ${e.contactValue ?? ""}`.trim(),
+    `Mobile: ${e.mobile ?? ""}`,
     `Vehicle: ${[e.year, e.make, e.model].filter(Boolean).join(" ")}`,
     `Service: ${service ?? ""}`,
     "",

@@ -2,13 +2,11 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import {
-  contactMethods,
   enquirySummary,
   fieldOrder,
   serviceOptions,
   validateEnquiry,
   validateField,
-  type ContactMethod,
   type Enquiry,
   type EnquiryErrors,
   type EnquiryField,
@@ -17,13 +15,7 @@ import { contactChannels } from "@/config/business";
 
 type Status = "idle" | "submitting" | "received" | "not_configured" | "failed" | "rate_limited";
 
-const empty: Enquiry = { name: "", contactMethod: "phone", contactValue: "", make: "", model: "", year: "", service: "", message: "" };
-
-const valueLabel: Record<ContactMethod, { label: string; type: string; autoComplete: string; hint: string }> = {
-  phone: { label: "Phone number", type: "tel", autoComplete: "tel", hint: "Include the country code if you’re calling from abroad." },
-  whatsapp: { label: "WhatsApp number", type: "tel", autoComplete: "tel", hint: "The number your WhatsApp account uses." },
-  email: { label: "Email address", type: "email", autoComplete: "email", hint: "" },
-};
+const empty: Enquiry = { name: "", mobile: "", make: "", model: "", year: "", service: "", message: "" };
 
 export function EnquiryForm() {
   const [values, setValues] = useState<Enquiry>(empty);
@@ -50,9 +42,6 @@ export function EnquiryForm() {
     const next = { ...values, [field]: value };
     setValues(next);
     if (touched[field] || errors[field]) setErrors((e) => ({ ...e, [field]: validateField(field, next) }));
-    if (field === "contactMethod" && (touched.contactValue || errors.contactValue)) {
-      setErrors((e) => ({ ...e, contactValue: validateField("contactValue", next) }));
-    }
   };
 
   const blur = (field: EnquiryField) => {
@@ -106,7 +95,6 @@ export function EnquiryForm() {
   }
 
   const errorList = fieldOrder.filter((f) => errors[f]);
-  const method = valueLabel[values.contactMethod];
 
   const describedBy = (f: EnquiryField, hint?: boolean) => [hint ? id(`${f}-hint`) : null, errors[f] ? id(`${f}-error`) : null].filter(Boolean).join(" ") || undefined;
 
@@ -116,7 +104,7 @@ export function EnquiryForm() {
         <h3 className="t-h3">Request sent</h3>
         <p className="mt-3 max-w-[52ch] text-alloy">
           Your request has reached the workshop. This is not a confirmed booking — an appointment is only booked once the workshop confirms a
-          time with you by {contactMethods.find((m) => m.value === values.contactMethod)?.label.toLowerCase()}.
+          time with you on your mobile number.
         </p>
         <button
           type="button"
@@ -159,7 +147,7 @@ export function EnquiryForm() {
 
       <fieldset className="grid gap-8 md:grid-cols-2">
         <legend className="t-h3 mb-6">You</legend>
-        <div className="md:col-span-2">
+        <div>
           <label htmlFor={id("name")} className="field-label">
             Name
           </label>
@@ -181,57 +169,30 @@ export function EnquiryForm() {
           )}
         </div>
 
-        <fieldset className="md:col-span-1" aria-describedby={describedBy("contactMethod")}>
-          <legend className="field-label">Preferred contact method</legend>
-          <div className="mt-1 inline-flex w-full border border-gunmetal" id={id("contactMethod")}>
-            {contactMethods.map((m) => (
-              <label key={m.value} className="relative flex-1 cursor-pointer">
-                <input
-                  type="radio"
-                  name="contactMethod"
-                  value={m.value}
-                  checked={values.contactMethod === m.value}
-                  onChange={() => update("contactMethod", m.value)}
-                  className="peer absolute inset-0 opacity-0"
-                />
-                <span className="flex min-h-[48px] items-center justify-center px-2 text-[0.9375rem] font-[560] text-alloy transition-colors peer-checked:bg-titanium peer-checked:text-asphalt peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-signal-text">
-                  {m.label}
-                </span>
-              </label>
-            ))}
-          </div>
-          {errors.contactMethod && (
-            <p id={id("contactMethod-error")} className="field-error">
-              {errors.contactMethod}
-            </p>
-          )}
-        </fieldset>
-
         <div>
-          <label htmlFor={id("contactValue")} className="field-label">
-            {method.label}
+          <label htmlFor={id("mobile")} className="field-label">
+            Mobile number
           </label>
           <input
-            id={id("contactValue")}
-            name="contactValue"
-            type={method.type}
-            inputMode={method.type === "tel" ? "tel" : "email"}
-            autoComplete={method.autoComplete}
+            id={id("mobile")}
+            name="mobile"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="98765 43210"
             className="field-input"
-            value={values.contactValue}
-            onChange={(e) => update("contactValue", e.target.value)}
-            onBlur={() => blur("contactValue")}
-            aria-invalid={!!errors.contactValue}
-            aria-describedby={describedBy("contactValue", !!method.hint)}
+            value={values.mobile}
+            onChange={(e) => update("mobile", e.target.value)}
+            onBlur={() => blur("mobile")}
+            aria-invalid={!!errors.mobile}
+            aria-describedby={describedBy("mobile", true)}
           />
-          {method.hint && (
-            <p id={id("contactValue-hint")} className="mt-2 text-[0.8125rem] text-alloy">
-              {method.hint}
-            </p>
-          )}
-          {errors.contactValue && (
-            <p id={id("contactValue-error")} className="field-error">
-              {errors.contactValue}
+          <p id={id("mobile-hint")} className="mt-2 text-[0.8125rem] text-alloy">
+            Used to call or message you about this request.
+          </p>
+          {errors.mobile && (
+            <p id={id("mobile-error")} className="field-error">
+              {errors.mobile}
             </p>
           )}
         </div>

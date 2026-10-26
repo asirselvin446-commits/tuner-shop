@@ -90,7 +90,8 @@ export const business: BusinessConfig = {
   /** Supplied and confirmed by the client as the business's Google Maps listing (2026-10-26). */
   mapUrl: "https://maps.app.goo.gl/FLwH4xRYVwbxjQoaA",
   mapReference: "https://maps.app.goo.gl/FLwH4xRYVwbxjQoaA",
-  phone: null,
+  /** Shop mobile, supplied by the client (2026-10-26). */
+  phone: "+919159944902",
   whatsapp: null,
   email: null,
   openingHours: null,
@@ -133,11 +134,17 @@ export type ContactChannel =
   | { kind: "email"; label: string; href: string; display: string }
   | { kind: "directions"; label: string; href: string; display: string };
 
-/** Only channels with verified values. Empty array means "use the enquiry form". */
+/** Readable form of an E.164 number; Indian mobiles as "+91 91599 44902". */
+export function formatPhone(e164: string): string {
+  const m = e164.match(/^\+91(\d{5})(\d{5})$/);
+  return m ? `+91 ${m[1]} ${m[2]}` : e164;
+}
+
+/** Only channels with verified values. Empty array means "use the booking form". */
 export function contactChannels(): ContactChannel[] {
   const channels: ContactChannel[] = [];
   if (business.phone) {
-    channels.push({ kind: "phone", label: "Call", href: `tel:${business.phone}`, display: business.phone });
+    channels.push({ kind: "phone", label: "Call", href: `tel:${business.phone}`, display: formatPhone(business.phone) });
   }
   if (business.whatsapp) {
     const digits = business.whatsapp.replace(/[^\d]/g, "");
