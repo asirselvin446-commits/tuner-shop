@@ -6,6 +6,7 @@ import { PerformanceLab } from "@/components/lab/PerformanceLab";
 import { DiagnosticJourney } from "@/components/diagnostics/DiagnosticJourney";
 import { WorkFramework } from "@/components/work/WorkFramework";
 import { ClosingCta } from "@/components/layout/ClosingCta";
+import { HomeReviews } from "@/components/reviews/HomeReviews";
 import { pageMetadata } from "@/lib/seo";
 import { displayName } from "@/config/business";
 
@@ -31,6 +32,7 @@ export default function HomePage() {
         </div>
       </section>
       <DiagnosticJourney />
+      <HomeReviews />
       <section className="bg-asphalt py-24 md:py-36">
         <div className="shell">
           <WorkFramework limit={2} />

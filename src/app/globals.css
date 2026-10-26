@@ -106,7 +106,7 @@
     line-height: 0.9;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    font-size: clamp(2.25rem, 10vw, 4.75rem);
+    font-size: clamp(1.875rem, 10vw, 4.75rem);
   }
 
   @media (min-width: 768px) {

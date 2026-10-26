@@ -72,6 +72,11 @@ export interface BusinessConfig {
     /** True while the site uses illustrative footage rather than footage of this workshop. */
     illustrative: boolean;
   };
+  /**
+   * Google Maps rating as seen on a given date. Always displayed with its date; replaced by the live value
+   * when the Places API is configured. Update `asOf` whenever the numbers are refreshed.
+   */
+  googleRating: { value: number; count: number; asOf: string } | null;
 }
 
 export const business: BusinessConfig = {
@@ -100,6 +105,8 @@ export const business: BusinessConfig = {
     yaw: -0.6,
   },
   media: { illustrative: true },
+  // From the Google Maps listing screenshot supplied by the client.
+  googleRating: { value: 4.7, count: 69, asOf: "2026-10-26" },
 };
 
 /* ------------------------------------------------------------------ helpers */
