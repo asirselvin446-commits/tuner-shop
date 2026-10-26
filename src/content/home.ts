@@ -15,18 +15,22 @@ export const hero = {
  */
 export const storyChapters = [
   {
+    label: "Network",
     title: "A car is a network.",
     body: "Engine, gearbox, brakes, body and dashboard each have their own control unit. They talk constantly over the vehicle’s data networks.",
   },
   {
+    label: "Modules",
     title: "Every module has a job.",
     body: "The engine control unit decides fuelling, timing and boost thousands of times a second. Its neighbours share sensor data, limits and fault reports.",
   },
   {
+    label: "Diagnose",
     title: "Read before you write.",
     body: "Work starts with what the car reports: fault memory, live data and software versions. Calibration or repair follows only once the picture is clear.",
   },
   {
+    label: "Services",
     title: "Then the right service.",
     body: "Coding, remapping, repair, DPF work or a software update — chosen for the fault or goal you actually have.",
   },

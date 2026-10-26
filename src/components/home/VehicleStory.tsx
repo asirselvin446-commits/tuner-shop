@@ -9,6 +9,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { createProgress } from "@/lib/progress";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { VehicleStage } from "@/components/vehicle/VehicleStage";
+import { useLenis } from "@/components/motion/SmoothScroll";
 import Image from "next/image";
 import { media } from "@/content/media";
 import { CanDiagram } from "./CanDiagram";
@@ -28,6 +29,17 @@ export function VehicleStory() {
   const reduceMotion = usePrefersReducedMotion();
   const services = publishedServices();
   const n = storyChapters.length;
+  const lenis = useLenis();
+
+  /** Scroll to the point where chapter `i` is fully on screen. */
+  const goToChapter = (i: number) => {
+    const track = root.current?.querySelector<HTMLElement>("[data-story-track]");
+    if (!track) return;
+    const top = track.getBoundingClientRect().top + window.scrollY;
+    const target = top + ((i + 0.3) / n) * (track.offsetHeight - window.innerHeight);
+    if (lenis) lenis.scrollTo(target, { duration: 1.4 });
+    else window.scrollTo({ top: target, behavior: "smooth" });
+  };
 
   useGSAP(
     () => {
@@ -35,6 +47,7 @@ export function VehicleStory() {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const chapters = q("[data-chapter]");
+        const links = q("[data-chapter-link]");
         gsap.set(chapters.slice(1), { autoAlpha: 0 });
 
         const tl = gsap.timeline({
@@ -44,7 +57,12 @@ export function VehicleStory() {
             start: "top top",
             end: "bottom bottom",
             scrub: true,
-            onUpdate: (self) => progress.set(self.progress),
+            onUpdate: (self) => {
+              progress.set(self.progress);
+              // Mark the current chapter in the navigation without a React re-render per frame.
+              const active = Math.min(n - 1, Math.floor(self.progress * n));
+              links.forEach((el, i) => (i === active ? el.setAttribute("aria-current", "step") : el.removeAttribute("aria-current")));
+            },
           },
         });
 
@@ -59,9 +77,16 @@ export function VehicleStory() {
         tl.fromTo(q("[data-diagram]"), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.12, ease: "power2.out" }, 0.02);
         tl.fromTo(q(".bus-line"), { strokeDashoffset: 1, strokeDasharray: "1 1" }, { strokeDashoffset: 0, duration: 0.35 }, 0.04)
           .fromTo(q("[data-node]"), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.25, stagger: 0.04 }, 0.08)
-          .fromTo(q("[data-node-box='ecu']"), { fill: "#17191c" }, { fill: "#3a0c14", duration: 0.25 }, 1)
+          // Chapter 2: the engine control unit takes the light.
+          .fromTo(q("[data-node-box='ecu']"), { fill: "#17191c", stroke: "#2e3237" }, { fill: "#3a0c14", stroke: "#c8102e", duration: 0.25 }, 1)
           .fromTo(q("[data-ecu-detail]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 1.05)
+          // Chapter 3: the light hands over to the diagnostic path — tool, OBD port, gateway, bus.
+          .to(q("[data-node-box='ecu']"), { fill: "#17191c", stroke: "#2e3237", duration: 0.2 }, 1.88)
+          .to(q("[data-ecu-detail]"), { autoAlpha: 0, duration: 0.2 }, 1.88)
           .fromTo(q("[data-tool]"), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3 }, 2)
+          .fromTo(q("[data-read-path]"), { strokeDasharray: "1 1", strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.3 }, 2.15)
+          .fromTo(q("[data-node-box='gw']"), { fill: "#17191c", stroke: "#2e3237" }, { fill: "#3a0c14", stroke: "#c8102e", duration: 0.2 }, 2.4)
+          .fromTo(q("[data-read-stub]"), { strokeDasharray: "1 1", strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.15 }, 2.45)
           .to(q("[data-diagram]"), { autoAlpha: 0.25, duration: 0.3 }, 3)
           .fromTo(q("[data-stage-dim]"), { opacity: 0 }, { opacity: 0.55, duration: 0.4 }, 2.9)
           .fromTo(q("[data-progress-fill]"), { scaleX: 0 }, { scaleX: 1, duration: n }, 0)
@@ -120,14 +145,29 @@ export function VehicleStory() {
             </div>
           </div>
 
-          <div aria-hidden="true" className="story-progress shell">
+          {/* Chapter navigation: progress rail with a labelled, clickable marker per chapter. */}
+          <nav aria-label="Story chapters" className="story-progress shell">
             <div className="relative h-px bg-gunmetal">
               <div data-progress-fill className="absolute inset-0 origin-left bg-signal" />
-              {storyChapters.map((c, i) => (
-                <span key={c.title} className="absolute top-0 h-2 w-px -translate-y-1/2 bg-alloy" style={{ left: `${(i / n) * 100}%` }} />
-              ))}
+              <ol>
+                {storyChapters.map((c, i) => (
+                  <li key={c.title} className="absolute bottom-0" style={{ left: `${(i / n) * 100}%` }}>
+                    <span aria-hidden="true" className="absolute bottom-0 left-0 h-2 w-px translate-y-1/2 bg-alloy" />
+                    <button
+                      type="button"
+                      data-chapter-link={i}
+                      onClick={() => goToChapter(i)}
+                      className="story-chapter-link t-note flex min-h-[44px] items-end gap-2 pb-3 pl-2 whitespace-nowrap transition-colors hover:text-titanium"
+                    >
+                      <span className="tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="hidden sm:inline">{c.label}</span>
+                      <span className="sr-only sm:hidden">{c.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
             </div>
-          </div>
+          </nav>
         </div>
       </div>
     </section>

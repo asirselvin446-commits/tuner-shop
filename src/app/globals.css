@@ -702,3 +702,22 @@ body::after {
 .lab li.is-reached .step-index {
   color: var(--color-signal);
 }
+
+/* Story chapter navigation: the current chapter reads brighter, its number in the signal colour. */
+.story-chapter-link[aria-current="step"] {
+  color: var(--color-titanium);
+}
+
+.story-chapter-link[aria-current="step"] > span:first-child {
+  color: var(--color-signal-text);
+}
+
+/* Keep the "Illustrative" tag clear of the chapter rail at the bottom of the story frame. */
+.story-stage .media-tag {
+  bottom: auto;
+  top: 12px;
+}
+
+html.js:not(.reduce-motion) .story-stage .media-tag {
+  top: calc(var(--header-h) + 12px);
+}

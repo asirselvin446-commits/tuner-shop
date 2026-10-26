@@ -74,7 +74,7 @@ export function CanDiagram({ className = "" }: { className?: string }) {
         {bottom.map((n) => (
           <g key={n.id} data-node data-node-id={n.id}>
             <line x1={n.x + NODE_W / 2} y1={BUS_L} x2={n.x + NODE_W / 2} y2={252} stroke="var(--color-steel)" strokeWidth="1" />
-            <rect x={n.x} y={252} width={NODE_W} height={NODE_H} fill="var(--color-graphite)" stroke="var(--color-gunmetal)" strokeWidth="1" />
+            <rect data-node-box={n.id} x={n.x} y={252} width={NODE_W} height={NODE_H} fill="var(--color-graphite)" stroke="var(--color-gunmetal)" strokeWidth="1" />
             <text x={n.x + 12} y={252 + 22} className="t-svg-label" fill="var(--color-titanium)">
               {n.label}
             </text>
@@ -86,17 +86,23 @@ export function CanDiagram({ className = "" }: { className?: string }) {
 
         {/* Diagnostic connection, revealed in chapter three */}
         <g data-tool>
-          <path d={`M336 ${252 + NODE_H} V340 H250`} pathLength={1} stroke="var(--color-titanium)" strokeWidth="1.25" strokeDasharray="0.02 0.015" fill="none" />
-          <rect x={136} y={322} width={114} height={36} fill="var(--color-titanium)" />
-          <text x={148} y={345} className="t-svg-label" fill="var(--color-asphalt)">
+          <path d={`M336 ${252 + NODE_H} V340 H258`} pathLength={1} stroke="var(--color-titanium)" strokeWidth="1.25" strokeDasharray="0.02 0.015" fill="none" />
+          <rect x={112} y={322} width={146} height={36} fill="var(--color-titanium)" />
+          <text x={124} y={345} className="t-svg-label" fill="var(--color-asphalt)">
             Diagnostic tool
           </text>
           <text x={344} y={326} className="t-svg-note" fill="var(--color-alloy)">
             OBD port
           </text>
-          <text x={136} y={384} className="t-svg-note" fill="var(--color-alloy)">
+          <text x={112} y={384} className="t-svg-note" fill="var(--color-alloy)">
             Fault memory, live data, software versions
           </text>
+        </g>
+
+        {/* Chapter three: the read path, from the tool through the OBD port and gateway onto the bus */}
+        <g data-read fill="none" stroke="var(--color-signal)" strokeWidth="2">
+          <path data-read-path d={`M258 340 H336 V${252 + NODE_H}`} pathLength={1} />
+          <path data-read-stub d={`M336 252 V${BUS_L}`} pathLength={1} />
         </g>
       </svg>
       <figcaption className="t-note mt-3">Simplified diagram. Network layouts differ between manufacturers and models.</figcaption>
