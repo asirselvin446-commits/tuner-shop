@@ -19,12 +19,18 @@ export function Wordmark({ className = "" }: { className?: string }) {
             <path d="M6 1h15l-5 20H1z" fill="var(--color-signal)" />
             <path d="M9.5 6h7.5l-.9 3.6H8.6z" fill="var(--color-asphalt)" />
           </svg>
-          <span
-            className="max-w-[16ch] text-[0.8125rem] leading-[1.05] font-[650] text-titanium sm:max-w-none sm:text-[0.875rem]"
-            style={{ fontStretch: business.name ? "118%" : "84%" }}
-          >
-            {label}
-          </span>
+          {business.name ? (
+            // Logotype: the listed name in expanded capitals, matching how it appears on Google Maps.
+            // Stacks as two deliberate lines on small screens (last word below) instead of breaking raggedly.
+            <span className="text-[0.8125rem] leading-[1.05] font-[760] tracking-[0.02em] whitespace-nowrap text-titanium uppercase [font-stretch:100%] min-[400px]:[font-stretch:112%] sm:text-[0.9375rem] md:leading-none md:[font-stretch:125%]">
+              {label.split(" ").slice(0, -1).join(" ")}{" "}
+              <span className="block md:inline">{label.split(" ").slice(-1)[0]}</span>
+            </span>
+          ) : (
+            <span className="max-w-[16ch] text-[0.8125rem] leading-[1.05] font-[650] text-titanium [font-stretch:84%] sm:max-w-none sm:text-[0.875rem]">
+              {label}
+            </span>
+          )}
         </>
       )}
     </Link>

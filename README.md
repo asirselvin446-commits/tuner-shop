@@ -4,9 +4,9 @@ A cinematic, production-oriented website for an automotive ECU tuning, diagnosti
 Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, GSAP + ScrollTrigger, Lenis, and
 React Three Fiber/Drei for an optional WebGL vehicle scene.
 
-> **Business details are not yet verified.** The Google Maps reference supplied
-> (`https://maps.app.goo.gl/FLwH4xRYVwbxjQoaA`) could not be resolved from the build environment, so the
-> business name, address, phone, WhatsApp, email, hours and coverage are all **unset**. Nothing was guessed.
+> **Business: New Generation Tuner's** (name confirmed from the Google Maps listing). Address, phone,
+> WhatsApp, email, full opening hours and vehicle coverage are still **unset** — the short Maps link can't be
+> opened from the build environment, and nothing was guessed.
 > Fill them in at [`src/config/business.ts`](src/config/business.ts) — see [Before launch](#before-launch).
 
 ## Run it
@@ -26,6 +26,8 @@ Copy `.env.example` to `.env.local` and set:
 | `NEXT_PUBLIC_SITE_URL` | Public origin. Enables canonical URLs, absolute OG images, sitemap entries and `metadataBase`. |
 | `ENQUIRY_WEBHOOK_URL` | Where the enquiry form posts JSON (Formspree, Make/Zapier, CRM, own API). While unset, the form validates but tells visitors their enquiry was **not** sent. |
 | `ENQUIRY_WEBHOOK_TOKEN` | Optional bearer token for the webhook. |
+| `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID` | Turn on live Google reviews at `/reviews` (Places API “New”). Without them the page links to the Google Maps listing. |
+| `GOOGLE_PLACES_LANGUAGE` | Optional review language, default `en`. |
 
 The `/api/enquiry` route needs a Node server (`next start`, Vercel, etc.); the rest of the site is static.
 
@@ -102,10 +104,10 @@ reduced motion or Save-Data. Phones get 854px clips; the story uses 48 frames on
 ### Business information still needed
 Set in `src/config/business.ts` (the dev-only "Setup" panel lists what's missing):
 
-- [ ] Official business name (and legal name) — the wordmark currently shows the descriptor "ECU tuning & vehicle electronics"
+- [x] Business name: **New Generation Tuner's** (from the Google Maps listing; listed there as "NEW GENERATION TUNER'S"). Legal name still needed
 - [ ] Logo and brand assets
 - [ ] Verified address and coordinates
-- [ ] Verified Google Maps place URL (enables "Get directions")
+- [x] Google Maps listing: `https://maps.app.goo.gl/FLwH4xRYVwbxjQoaA` (enables "Get directions" and the reviews link)
 - [ ] Phone, WhatsApp and email (each enables its contact button)
 - [ ] Opening hours
 - [ ] Social links
@@ -119,6 +121,21 @@ Set in `src/config/business.ts` (the dev-only "Setup" panel lists what's missing
 
 LocalBusiness/Service structured data is emitted automatically once the name and address are set. No
 ratings or reviews are ever generated.
+
+### Google reviews (`/reviews`)
+Reviews are **not** copied into the site: Google's terms prohibit scraping Maps content and each review belongs to
+its author. The page loads them live from the Places API instead, server-side, on every request (Places content may
+not be cached), with the attribution Google requires (author photo/name/link, a link to each review on Google Maps,
+a report link, “Google Maps” attribution and an ordering notice). Google returns up to five reviews, ordered by relevance.
+
+To switch it on:
+1. In Google Cloud, create a project with billing, enable **Places API (New)**, and create an API key restricted to that API.
+2. Find the listing's Place ID with Google's [Place ID Finder](https://developers.google.com/maps/documentation/places/web-service/place-id).
+3. Add `GOOGLE_PLACES_API_KEY` and `GOOGLE_PLACE_ID` to the Vercel project's environment variables and redeploy.
+
+Each page view is one billable Place Details request (reviews fall in Google's higher-priced Place Details SKU); check
+current Google Maps Platform pricing and set a budget alert. No aggregate rating is emitted as structured data —
+Google doesn't allow review markup sourced from third-party sites.
 
 ### Missing or provisional assets
 - **3D car model: not supplied.** No GLB/glTF/FBX/OBJ was in the project. To add one: export to GLB

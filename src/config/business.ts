@@ -7,8 +7,9 @@
  *    showing a guess, and `missingBusinessFields()` lists every gap for the build-time setup notice.
  *  - Phone and WhatsApp numbers use E.164 format, e.g. "+441234567890".
  *
- * Status (2026-10-24): the Google Maps reference supplied by the client could not be resolved from the
- * build environment, so the business identity, address and contact details are still unverified.
+ * Status (2026-10-26): business name confirmed by the client from the Google Maps listing (screenshot).
+ * The short Maps link cannot be opened from the build environment, so address, phone, email and full
+ * opening hours are still unverified and stay unset.
  */
 import type { ServiceSlug } from "@/content/services";
 
@@ -74,13 +75,15 @@ export interface BusinessConfig {
 }
 
 export const business: BusinessConfig = {
-  name: null,
+  /** As listed on Google Maps: "NEW GENERATION TUNER'S" (shown in title case on the site). */
+  name: "New Generation Tuner's",
   legalName: null,
   descriptor: "ECU tuning & vehicle electronics",
   logo: null,
   address: null,
   geo: null,
-  mapUrl: null,
+  /** Supplied and confirmed by the client as the business's Google Maps listing (2026-10-26). */
+  mapUrl: "https://maps.app.goo.gl/FLwH4xRYVwbxjQoaA",
   mapReference: "https://maps.app.goo.gl/FLwH4xRYVwbxjQoaA",
   phone: null,
   whatsapp: null,
@@ -166,5 +169,6 @@ export function missingBusinessFields(): string[] {
   check("3D vehicle model", business.vehicleModel.src);
   if (!siteUrl()) missing.push("Site domain (NEXT_PUBLIC_SITE_URL)");
   if (!process.env.ENQUIRY_WEBHOOK_URL) missing.push("Enquiry destination (ENQUIRY_WEBHOOK_URL)");
+  if (!process.env.GOOGLE_PLACES_API_KEY || !process.env.GOOGLE_PLACE_ID) missing.push("Google reviews (GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID)");
   return missing;
 }

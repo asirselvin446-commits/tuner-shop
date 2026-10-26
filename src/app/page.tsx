@@ -7,6 +7,7 @@ import { DiagnosticJourney } from "@/components/diagnostics/DiagnosticJourney";
 import { WorkFramework } from "@/components/work/WorkFramework";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { pageMetadata } from "@/lib/seo";
+import { displayName } from "@/config/business";
 
 export const metadata: Metadata = {
   ...pageMetadata({
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
       "ECU coding, remapping, performance tuning, ECU repair, DPF service and vehicle software updates — with diagnosis before any calibration or repair.",
     path: "/",
   }),
-  title: { absolute: "ECU remapping, coding, diagnostics and repair" },
+  title: { absolute: `${displayName()} — ECU remapping, coding, diagnostics and repair` },
 };
 
 export default function HomePage() {
