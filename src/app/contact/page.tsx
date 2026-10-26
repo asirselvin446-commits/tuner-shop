@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact and appointments",
-  description: "Send an enquiry about diagnostics, ECU coding, remapping, tuning, ECU repair, DPF service or software updates.",
+  description: "Book a diagnostic, or ask about ECU coding, remapping, tuning, ECU repair, DPF service or software updates.",
   path: "/contact",
 });
 
@@ -26,9 +26,9 @@ export default function ContactPage() {
           <h1 className="t-display max-w-[12ch]">Book a diagnostic</h1>
         </header>
 
-        <section id="enquiry" aria-labelledby="enquiry-title" className="col-span-4 scroll-mt-[calc(var(--header-h)+1.5rem)] md:col-span-7">
-          <h2 id="enquiry-title" className="sr-only">
-            Enquiry form
+        <section id="book" aria-labelledby="book-title" className="col-span-4 scroll-mt-[calc(var(--header-h)+1.5rem)] md:col-span-7">
+          <h2 id="book-title" className="sr-only">
+            Booking form
           </h2>
           <EnquiryForm />
         </section>

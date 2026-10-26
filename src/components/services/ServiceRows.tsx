@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Service } from "@/content/services";
 import { Media } from "@/components/media/Media";
-import { enquiryHref } from "@/config/navigation";
 
 /**
  * Editorial service rows: media and copy alternate sides and proportions, so a list of services reads
@@ -33,9 +32,6 @@ export function ServiceRows({ items }: { items: Service[] }) {
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link href={`/services/${s.slug}`} className="btn btn-ghost">
                     More on {s.name}
-                  </Link>
-                  <Link href={enquiryHref(s.slug)} className="btn btn-primary">
-                    Enquire
                   </Link>
                 </div>
               </div>

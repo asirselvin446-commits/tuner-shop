@@ -113,9 +113,9 @@ export function EnquiryForm() {
   if (status === "received") {
     return (
       <div ref={statusRef} tabIndex={-1} role="status" className="border-l-2 border-signal py-2 pl-6 outline-none">
-        <h3 className="t-h3">Enquiry sent</h3>
+        <h3 className="t-h3">Request sent</h3>
         <p className="mt-3 max-w-[52ch] text-alloy">
-          Your enquiry has reached the workshop. This is not a confirmed booking — an appointment is only booked once the workshop confirms a
+          Your request has reached the workshop. This is not a confirmed booking — an appointment is only booked once the workshop confirms a
           time with you by {contactMethods.find((m) => m.value === values.contactMethod)?.label.toLowerCase()}.
         </p>
         <button
@@ -127,7 +127,7 @@ export function EnquiryForm() {
             setStatus("idle");
           }}
         >
-          Send another enquiry
+          Send another request
         </button>
       </div>
     );
@@ -136,14 +136,14 @@ export function EnquiryForm() {
   return (
     <form noValidate onSubmit={onSubmit} aria-describedby={id("intro")} className="relative">
       <p id={id("intro")} className="mb-10 max-w-[56ch] text-alloy">
-        All fields are required except the model year. Sending an enquiry doesn’t book an appointment; the workshop confirms bookings
+        All fields are required except the model year. Sending this form doesn’t book an appointment; the workshop confirms bookings
         directly with you.
       </p>
 
       {errorList.length > 0 && (
         <div ref={summaryRef} tabIndex={-1} role="alert" aria-labelledby={id("summary")} className="mb-10 border border-signal-text p-5 outline-none">
           <h3 id={id("summary")} className="font-[650]">
-            {errorList.length === 1 ? "There is 1 problem with the enquiry" : `There are ${errorList.length} problems with the enquiry`}
+            {errorList.length === 1 ? "There is 1 problem with the form" : `There are ${errorList.length} problems with the form`}
           </h3>
           <ul className="mt-3 space-y-1.5">
             {errorList.map((f) => (
@@ -336,31 +336,31 @@ export function EnquiryForm() {
 
       <div className="mt-12 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
         <button type="submit" className="btn btn-primary min-w-[14rem]" disabled={status === "submitting"} aria-disabled={status === "submitting"}>
-          {status === "submitting" ? "Sending…" : "Send enquiry"}
+          {status === "submitting" ? "Sending…" : "Send request"}
         </button>
-        <p className="max-w-[44ch] text-[0.8125rem] text-alloy">Details are used only to respond to this enquiry.</p>
+        <p className="max-w-[44ch] text-[0.8125rem] text-alloy">Details are used only to respond to this request.</p>
       </div>
 
       {(status === "not_configured" || status === "failed" || status === "rate_limited") && (
         <div ref={statusRef} tabIndex={-1} role="alert" className="mt-10 border border-signal-text p-5 outline-none">
           {status === "not_configured" && (
             <>
-              <h3 className="font-[650]">Your enquiry was not sent</h3>
+              <h3 className="font-[650]">Your request was not sent</h3>
               <p className="mt-2 text-alloy">
-                Online enquiries aren’t connected yet, so nothing was delivered or stored.
-                {channels.length > 0 ? " Please use one of the contact options on this page instead." : " You can copy your enquiry below to send it another way."}
+                Online requests aren’t connected yet, so nothing was delivered or stored.
+                {channels.length > 0 ? " Please use one of the contact options on this page instead." : " You can copy your request below to send it another way."}
               </p>
             </>
           )}
           {status === "failed" && (
             <>
-              <h3 className="font-[650]">Your enquiry couldn’t be delivered</h3>
+              <h3 className="font-[650]">Your request couldn’t be delivered</h3>
               <p className="mt-2 text-alloy">The connection failed or the inbox didn’t respond. Nothing has been booked. Try sending it again in a few minutes.</p>
             </>
           )}
           {status === "rate_limited" && (
             <>
-              <h3 className="font-[650]">Too many enquiries from this connection</h3>
+              <h3 className="font-[650]">Too many requests from this connection</h3>
               <p className="mt-2 text-alloy">Wait ten minutes, then send it again.</p>
             </>
           )}
@@ -371,7 +371,7 @@ export function EnquiryForm() {
               </button>
             )}
             <button type="button" onClick={copySummary} className="btn btn-ghost min-h-[44px]">
-              {copied ? "Enquiry copied" : "Copy enquiry text"}
+              {copied ? "Request copied" : "Copy request text"}
             </button>
             {channels.map((c) => (
               <a key={c.kind} href={c.href} className="btn btn-ghost min-h-[44px]">

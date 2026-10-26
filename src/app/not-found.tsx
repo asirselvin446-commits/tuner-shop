@@ -11,9 +11,6 @@ export default function NotFound() {
         <Link href="/" className="btn btn-primary">
           Go to the homepage
         </Link>
-        <Link href="/contact#enquiry" className="btn btn-ghost">
-          Send an enquiry
-        </Link>
       </div>
       <ul className="mt-14 flex flex-wrap gap-x-6 gap-y-2 text-alloy">
         {publishedServices().map((s) => (

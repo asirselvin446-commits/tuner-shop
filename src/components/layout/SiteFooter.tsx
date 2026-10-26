@@ -63,10 +63,15 @@ export function SiteFooter() {
               </address>
             ) : (
               <p className="text-alloy">
-                <Link href="/contact#enquiry" className="link-underline text-titanium">
-                  Send an enquiry
-                </Link>{" "}
-                for location and availability.
+                {business.mapUrl ? (
+                  <a href={business.mapUrl} target="_blank" rel="noopener noreferrer" className="link-underline text-titanium">
+                    Find us on Google Maps
+                  </a>
+                ) : (
+                  <Link href="/contact" className="link-underline text-titanium">
+                    Contact us
+                  </Link>
+                )}
               </p>
             )}
           </div>

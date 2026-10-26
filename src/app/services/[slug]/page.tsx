@@ -31,11 +31,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
   return (
     <>
       {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
-      <PageIntro title={service.name} lead={service.summary} media={service.media} parent={{ href: "/services", label: "Services" }}>
-        <Link href={enquiryHref(service.slug)} className="btn btn-primary mt-8">
-          Enquire about this service
-        </Link>
-      </PageIntro>
+      <PageIntro title={service.name} lead={service.summary} media={service.media} parent={{ href: "/services", label: "Services" }} />
 
       <div className="shell grid-12 gap-y-16 py-24 md:py-36">
         <div className="col-span-4 md:col-span-7">
@@ -84,7 +80,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
               </h2>
               <p className="mt-3 text-alloy">{service.nextStep}</p>
               <Link href={enquiryHref(service.slug)} className="btn btn-primary mt-6 w-full">
-                Start an enquiry
+                Book a diagnostic
               </Link>
             </section>
 

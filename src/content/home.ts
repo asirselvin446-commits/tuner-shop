@@ -5,7 +5,7 @@
 export const hero = {
   headline: ["Engineered", "for performance."],
   support: "Precision ECU tuning, vehicle diagnostics and electronic control solutions.",
-  primaryCta: { label: "Book a diagnostic", href: "/contact#enquiry" },
+  primaryCta: { label: "Book a diagnostic", href: "/contact#book" },
   secondaryCta: { label: "Explore performance", href: "/performance" },
 };
 

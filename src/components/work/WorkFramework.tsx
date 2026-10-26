@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { publishedCaseStudies } from "@/content/projects";
-import { enquiryHref } from "@/config/navigation";
 import { CaseStudyCard } from "./CaseStudyCard";
 
 const anatomy = [
@@ -31,9 +29,6 @@ export function WorkFramework({ headingLevel = 2, limit }: { headingLevel?: 2 | 
               No projects are published yet. Each one will appear here only once the work and its results are verified, with the owner’s
               consent.
             </p>
-            <Link href={enquiryHref()} className="btn btn-ghost mt-10">
-              Start an enquiry
-            </Link>
           </>
         ) : (
           <p className="t-lead mt-6 max-w-[36ch] text-alloy">Real vehicles, the work carried out, and verified results.</p>
