@@ -21,7 +21,7 @@ export const diagnosticSteps = [
   },
   {
     title: "Carry out the approved work",
-    body: "Repair, coding, a software update or DPF service — only the work you agreed to.",
+    body: "Programming, a reset, a repair or new keys — only the work you agreed to.",
   },
   {
     title: "Verify the outcome",

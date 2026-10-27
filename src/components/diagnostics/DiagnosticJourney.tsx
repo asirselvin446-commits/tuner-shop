@@ -20,7 +20,7 @@ export function DiagnosticJourney({ headingLevel = 2 }: { headingLevel?: 2 | 3 }
                 Diagnosis before parts.
               </Heading>
               <p className="t-lead mt-6 max-w-[38ch] text-lab-ink">
-                For a warning light, a fault that keeps coming back, a module that needs coding or software that needs updating.
+                For a warning light, a fault that keeps coming back, a module that needs programming or an airbag light after repairs.
               </p>
               <div className="mt-10 grid grid-cols-2 gap-3">
                 <Media id="diagnostics" reveal sizes="(min-width: 768px) 20vw, 50vw" className="aspect-[4/5]" />
@@ -50,7 +50,7 @@ export function DiagnosticJourney({ headingLevel = 2 }: { headingLevel?: 2 | 3 }
               A typical sequence. The exact procedure depends on the vehicle and the fault, and is confirmed when you book.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link href={enquiryHref("diagnosis")} className="btn btn-primary">
+              <Link href={enquiryHref("diagnostics-scanning")} className="btn btn-primary">
                 Book a diagnostic
               </Link>
               <Link href="/repairs" className="btn btn-ghost">

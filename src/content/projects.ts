@@ -52,7 +52,7 @@ export const templatePreview: CaseStudy = {
   verified: false,
   title: "Case study template",
   vehicle: { make: "Make", model: "Model", year: undefined, engine: "Engine code and fuel type" },
-  services: ["ecu-repair"],
+  services: ["diagnostics-scanning"],
   concern: "The customer’s concern or goal, in plain language — what they noticed and what they wanted.",
   findings: [
     "What the diagnosis showed, including anything ruled out.",

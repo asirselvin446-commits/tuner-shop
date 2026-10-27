@@ -4,7 +4,6 @@
 import { services } from "@/content/services";
 
 export const serviceOptions: { value: string; label: string }[] = [
-  { value: "diagnosis", label: "Diagnosis: fault or warning light" },
   ...services.map((s) => ({ value: s.slug, label: s.name })),
   { value: "not-sure", label: "Not sure yet" },
 ];

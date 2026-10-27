@@ -130,7 +130,7 @@ export function VehicleStory() {
                       {services.map((s) => (
                         <li key={s.slug} className="border-b border-gunmetal">
                           <Link href={`/services/${s.slug}`} className="block py-3 text-[0.9375rem] font-[560] transition-colors hover:text-signal-text">
-                            {s.name}
+                            {s.shortName}
                           </Link>
                         </li>
                       ))}

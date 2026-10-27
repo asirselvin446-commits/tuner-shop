@@ -20,11 +20,11 @@ const origin = siteUrl();
 export const metadata: Metadata = {
   metadataBase: origin ? new URL(origin) : undefined,
   title: {
-    default: `${displayName()} — ECU remapping, coding, diagnostics and repair`,
+    default: `${displayName()} — ECU diagnostics, programming, keys and tuning`,
     template: `%s | ${displayName()}`,
   },
   description:
-    "ECU coding, remapping, performance tuning, ECU repair, DPF service and vehicle software updates — diagnosed properly before any work begins.",
+    "Diagnostics, ECM and BCM programming, immo unlock, key programming, airbag resets, cluster programming, remapping and race tuning, and GPS and security systems — diagnosed properly before any work begins.",
   applicationName: business.name ?? undefined,
   formatDetection: { telephone: false },
 };

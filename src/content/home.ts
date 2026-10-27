@@ -32,6 +32,6 @@ export const storyChapters = [
   {
     label: "Services",
     title: "Then the right service.",
-    body: "Coding, remapping, repair, DPF work or a software update — chosen for the fault or goal you actually have.",
+    body: "Diagnostics, programming, keys, a remap or a security install — chosen for the fault or goal you actually have.",
   },
 ] as const;

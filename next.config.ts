@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [480, 768, 1024, 1366, 1600, 1920],
   },
+  async redirects() {
+    // Service pages from the original six-service catalogue, sent to their closest replacement.
+    return [
+      { source: "/services/ecu-coding", destination: "/services/ecm-bcm-programming", permanent: true },
+      { source: "/services/software-updates", destination: "/services/ecm-bcm-programming", permanent: true },
+      { source: "/services/ecu-repair", destination: "/services/ecm-bcm-programming", permanent: true },
+      { source: "/services/ecu-remapping", destination: "/services/remapping-race-tuning", permanent: true },
+      { source: "/services/performance-tuning", destination: "/services/remapping-race-tuning", permanent: true },
+      { source: "/services/dpf-service", destination: "/services", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

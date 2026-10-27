@@ -5,24 +5,33 @@ import { useState } from "react";
 import { publishedServices, type Service, type ServiceTrack } from "@/content/services";
 import { Media } from "@/components/media/Media";
 
-const tracks: { id: ServiceTrack; title: string; intro: string; href: string }[] = [
+const tracks: { id: ServiceTrack; title: string; intro: string; href: string; linkLabel: string }[] = [
   {
     id: "performance",
     title: "For more from the car",
     intro: "Calibration and tuning for a healthy vehicle, matched to its hardware and how you drive it.",
     href: "/performance",
+    linkLabel: "Performance overview",
   },
   {
     id: "repair",
-    title: "For a fault, a part or an update",
-    intro: "Diagnosis first, then coding, repair, DPF work or software — whichever the fault actually needs.",
+    title: "For a fault or a module",
+    intro: "Diagnosis first, then programming, coding or a reset for the engine, body, airbag and instrument modules.",
     href: "/repairs",
+    linkLabel: "Repairs overview",
+  },
+  {
+    id: "security",
+    title: "For keys and security",
+    intro: "Keys, immobilisers and anti-theft systems, for owners, with proof of ownership.",
+    href: "/services#security",
+    linkLabel: "Keys and security",
   },
 ];
 
 export function ServiceIndex() {
   const services = publishedServices();
-  const [active, setActive] = useState<Service["slug"]>(services[0]?.slug ?? "ecu-remapping");
+  const [active, setActive] = useState<Service["slug"]>(services[0]?.slug ?? "diagnostics-scanning");
   const activeService = services.find((s) => s.slug === active);
 
   return (
@@ -33,7 +42,7 @@ export function ServiceIndex() {
             Services
           </h2>
           <p className="t-lead col-span-4 max-w-[40ch] self-end text-alloy md:col-span-4">
-            Six services, two reasons to visit. Each page explains what the work involves and where its limits are.
+            Eight services, three reasons to visit. Each page explains what the work involves and where its limits are.
           </p>
         </div>
 
@@ -47,7 +56,7 @@ export function ServiceIndex() {
                   <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
                     <h3 className="t-h3">{track.title}</h3>
                     <Link href={track.href} className="link-underline self-start text-[0.9375rem] text-alloy hover:text-titanium md:self-auto">
-                      {track.id === "performance" ? "Performance overview" : "Repairs overview"}
+                      {track.linkLabel}
                     </Link>
                   </div>
                   <p className="mb-6 max-w-[52ch] text-alloy">{track.intro}</p>

@@ -9,9 +9,9 @@ import { enquiryHref } from "@/config/navigation";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Performance: ECU remapping and tuning",
+  title: "Performance: remapping and race tuning",
   description:
-    "Vehicle-specific ECU remapping and performance tuning, starting with a health check and finishing with verification. Results vary by vehicle.",
+    "Vehicle-specific remapping and race tuning, starting with a health check and finishing with verification. Results vary by vehicle.",
   path: "/performance",
 });
 
@@ -43,7 +43,7 @@ export default function PerformancePage() {
         lead="Calibration for a healthy car with hardware that can support it. The goal is performance that’s consistent and drivable, every time."
         media="dyno"
       >
-        <Link href={enquiryHref("performance-tuning")} className="btn btn-primary mt-8">
+        <Link href={enquiryHref("remapping-race-tuning")} className="btn btn-primary mt-8">
           Discuss your car
         </Link>
       </PageIntro>

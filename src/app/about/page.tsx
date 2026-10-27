@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "About",
-  description: "How ECU, diagnostic and tuning work is approached: diagnosis first, originals kept, honest limits and working emissions equipment.",
+  description: "How diagnostic, programming, key and tuning work is approached: diagnosis first, originals kept, honest limits and honest records.",
   path: "/about",
 });
 
@@ -17,7 +17,7 @@ const principles = [
   { title: "Keep the original", body: "Original software and coding are saved before changes, so the car can be returned to how it was." },
   { title: "Work to the car in front of us", body: "Calibration, coding and updates are matched to the exact vehicle, hardware and software level." },
   { title: "Say what isn’t possible", body: "Some modules can’t be coded, some units can’t be repaired, and some results can’t be promised. You hear that up front." },
-  { title: "Keep emissions equipment working", body: "DPF work is inspection, cleaning and repair. Removing or disabling emissions controls isn’t offered." },
+  { title: "Keep safety and records honest", body: "Airbag systems are restored, never silenced. Odometers only ever show a car’s genuine mileage, and key or immobiliser work needs proof of ownership." },
 ];
 
 export default function AboutPage() {
@@ -26,7 +26,7 @@ export default function AboutPage() {
     <>
       <PageIntro
         title="About"
-        lead="A workshop for vehicle electronics: engine calibration, control-module coding and repair, DPF service and software updates."
+        lead="A workshop for vehicle electronics: diagnostics, module and key programming, airbag and cluster work, remapping and race tuning, and security systems."
         media="workshop"
       />
 

@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Repairs, diagnostics, coding and software updates",
   description:
-    "Fault diagnosis, ECU service and repair, ECU coding, DPF service and vehicle software updates — the cause found before parts are replaced.",
+    "Diagnostics and scanning, ECM and BCM programming, airbag module resets and instrument cluster programming — the cause found before parts are replaced.",
   path: "/repairs",
 });
 
@@ -24,7 +24,7 @@ export default function RepairsPage() {
         lead="Warning lights, modules that won’t talk, filters that keep blocking, software that needs updating. The cause is found first, so the fix is the right one."
         media="ecuBoard"
       >
-        <Link href={enquiryHref("diagnosis")} className="btn btn-primary mt-8">
+        <Link href={enquiryHref("diagnostics-scanning")} className="btn btn-primary mt-8">
           Book a diagnostic
         </Link>
       </PageIntro>

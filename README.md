@@ -38,7 +38,7 @@ The `/api/enquiry` route needs a Node server (`next start`, Vercel, etc.); the r
 | `src/config/business.ts` | **Single source of business facts.** Typed, `null` = unset. `missingBusinessFields()` drives the dev-only setup notice. |
 | `src/config/navigation.ts` | Primary nav and the appointment CTA. |
 | `src/config/vehicleScene.ts` | Camera keyframes, lighting look and quality tiers for the WebGL scene. |
-| `src/content/services.ts` | Copy for the six confirmed services (what it involves, signs, next step, limits). |
+| `src/content/services.ts` | Copy for the eight confirmed services (what it involves, signs, next step, limits), grouped as performance, diagnostics and programming, keys and security. Old service URLs redirect in `next.config.ts`. |
 | `src/content/home.ts` | Hero headline/support copy (proposed, editable) and story chapters. |
 | `src/content/media.ts` | Media registry: posters, video sources, alt text, orbit frame sequence. |
 | `src/content/dyno.ts` | Verified dyno records for the Performance Lab (empty → labelled demo). |
@@ -54,7 +54,7 @@ The `/api/enquiry` route needs a Node server (`next start`, Vercel, etc.); the r
 | `src/components/motion/SmoothScroll.tsx`, `src/lib/gsap.ts` | Lenis ↔ ScrollTrigger integration and plugin registration. |
 | `scripts/process-media.mjs` | Media pipeline (H.264 web/mobile variants, posters, WebP frame sequence). |
 
-Routes: `/`, `/services`, `/services/[slug]` (6), `/performance`, `/repairs`, `/work`, `/work/[slug]`,
+Routes: `/`, `/services`, `/services/[slug]` (8), `/performance`, `/repairs`, `/work`, `/work/[slug]`,
 `/about`, `/contact`, `/api/enquiry`, `/sitemap.xml`, `/robots.txt`. In development only,
 `/work/template-preview` shows the case-study template with field descriptions (404 in production).
 
@@ -114,7 +114,7 @@ Set in `src/config/business.ts` (the dev-only "Setup" panel lists what's missing
 - [ ] Confirmed vehicle makes/coverage
 - [ ] Which tuning options are actually offered (stages, packages, hardware) — none are published
 - [ ] Whether dyno testing is available — not claimed anywhere
-- [ ] Confirmation of the policy statements on DPF/emissions work and the About page principles
+- [ ] Confirmation of the policy statements: proof of ownership for immobiliser and key work, no odometer rollback, airbag systems restored not silenced, road cars kept emissions-legal, and the About page principles
 - [ ] The workshop's actual diagnostic process (the page labels the current one as "typical")
 - [ ] A privacy notice for enquiry data, and the domain (`NEXT_PUBLIC_SITE_URL`) and enquiry destination (`ENQUIRY_WEBHOOK_URL`)
 - [ ] Verified case studies and dyno records, with customer consent

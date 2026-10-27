@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Services",
-  description: "ECU coding, ECU remapping, performance tuning, ECU service and repair, DPF service and vehicle software updates.",
+  description: "Diagnostics, ECM and BCM programming, immo unlock, key programming, airbag resets, cluster programming, remapping and race tuning, and GPS and security systems.",
   path: "/services",
 });
 
@@ -17,7 +17,7 @@ export default function ServicesPage() {
     <>
       <PageIntro
         title="Services"
-        lead="Six services for two kinds of visit: getting more from a healthy car, or putting right a fault, a part or out-of-date software."
+        lead="Eight services for three kinds of visit: getting more from a healthy car, putting right a fault or a module, or keys and security."
         media="workshop"
       />
       <section aria-labelledby="perf-heading" className="pt-28 md:pt-40">
@@ -28,13 +28,21 @@ export default function ServicesPage() {
         </div>
         <ServiceRows items={all.filter((s) => s.track === "performance")} />
       </section>
-      <section aria-labelledby="repair-heading" className="pt-28 pb-28 md:pt-40 md:pb-40">
+      <section aria-labelledby="repair-heading" className="pt-28 md:pt-40">
         <div className="shell mb-16">
           <h2 id="repair-heading" className="t-h3 text-alloy">
-            Repair, coding and updates
+            Diagnostics and programming
           </h2>
         </div>
         <ServiceRows items={all.filter((s) => s.track === "repair")} />
+      </section>
+      <section id="security" aria-labelledby="security-heading" className="scroll-mt-[calc(var(--header-h)+1.5rem)] pt-28 pb-28 md:pt-40 md:pb-40">
+        <div className="shell mb-16">
+          <h2 id="security-heading" className="t-h3 text-alloy">
+            Keys and security
+          </h2>
+        </div>
+        <ServiceRows items={all.filter((s) => s.track === "security")} />
       </section>
       <ClosingCta />
     </>

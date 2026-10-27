@@ -12,12 +12,12 @@ import { displayName } from "@/config/business";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "ECU remapping, coding, diagnostics and repair",
+    title: "ECU diagnostics, programming, keys and tuning",
     description:
-      "ECU coding, remapping, performance tuning, ECU repair, DPF service and vehicle software updates — with diagnosis before any calibration or repair.",
+      "Diagnostics, ECM and BCM programming, immo unlock, key programming, airbag resets, cluster programming, remapping and race tuning, and GPS and security systems — with diagnosis before any work begins.",
     path: "/",
   }),
-  title: { absolute: `${displayName()} — ECU remapping, coding, diagnostics and repair` },
+  title: { absolute: `${displayName()} — ECU diagnostics, programming, keys and tuning` },
 };
 
 export default function HomePage() {

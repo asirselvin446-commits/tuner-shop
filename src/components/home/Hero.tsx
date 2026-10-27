@@ -147,7 +147,7 @@ export function Hero() {
               {services.map((s) => (
                 <li key={s.slug}>
                   <Link href={`/services/${s.slug}`} className="t-note block py-1 transition-colors hover:text-titanium">
-                    {s.name}
+                    {s.shortName}
                   </Link>
                 </li>
               ))}

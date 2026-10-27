@@ -95,7 +95,16 @@ export const business: BusinessConfig = {
   whatsapp: null,
   email: null,
   openingHours: null,
-  services: ["ecu-coding", "dpf-service", "ecu-remapping", "performance-tuning", "ecu-repair", "software-updates"],
+  services: [
+    "diagnostics-scanning",
+    "immo-unlock",
+    "airbag-module-reset",
+    "instrument-cluster-programming",
+    "ecm-bcm-programming",
+    "key-programming",
+    "remapping-race-tuning",
+    "gps-security",
+  ],
   socials: [],
   vehicleCoverage: null,
   vehicleModel: {

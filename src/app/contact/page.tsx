@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact and appointments",
-  description: "Book a diagnostic, or ask about ECU coding, remapping, tuning, ECU repair, DPF service or software updates.",
+  description: "Book a diagnostic, or ask about programming, keys, airbag resets, remapping and race tuning, or GPS and security systems.",
   path: "/contact",
 });
 

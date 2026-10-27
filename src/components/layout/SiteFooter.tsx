@@ -16,7 +16,7 @@ export function SiteFooter() {
           <div className="col-span-4 md:col-span-5">
             <Wordmark />
             <p className="mt-6 max-w-[38ch] text-alloy">
-              Engine calibration, control-module coding and repair, DPF service and vehicle software updates.
+              Diagnostics, module and key programming, airbag and cluster work, remapping and race tuning, GPS and security.
             </p>
             <Link href={appointmentCta.href} className="link-underline mt-6 inline-block text-[0.9375rem] font-[600]">
               {appointmentCta.label}
