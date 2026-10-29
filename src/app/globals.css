@@ -45,6 +45,21 @@
     overflow-x: clip;
   }
 
+  /* No lone words on a last line: balanced headings, prettier wrapping for running copy. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd,
+  blockquote {
+    text-wrap: pretty;
+  }
+
   ::selection {
     background: var(--color-signal);
     color: #fff;

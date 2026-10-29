@@ -22,10 +22,14 @@ interface MediaProps {
   onReady?: () => void;
 }
 
+/** How long a clip must stay on screen before it is fetched, so scrolling past a row costs nothing. */
+const DWELL_MS = 600;
+
 /**
  * Poster-first media. The optimised poster renders immediately (and is all that renders without JS,
- * with reduced motion, or with Save-Data on). The video is fetched only near the viewport, swapped in
- * once it can play, and paused whenever it leaves the screen or the tab is hidden.
+ * with reduced motion, or with Save-Data on). The video is fetched only once the reader stops on it
+ * (immediately for `priority` media), swapped in once it can play, and paused whenever it leaves the
+ * screen or the tab is hidden.
  */
 export function Media({ id, sizes, className = "", priority, motion = true, objectPosition = "50% 50%", hideTag, reveal, onReady }: MediaProps) {
   const item = media[id];
@@ -43,6 +47,8 @@ export function Media({ id, sizes, className = "", priority, motion = true, obje
     if (reduce || saveData) return;
 
     const el = wrapRef.current;
+    let dwell: number | undefined;
+    const load = () => setSrc((cur) => cur ?? (window.innerWidth < 768 ? video.sm : video.lg));
     const sync = () => {
       const v = videoRef.current;
       if (!v) return;
@@ -52,20 +58,25 @@ export function Media({ id, sizes, className = "", priority, motion = true, obje
     const io = new IntersectionObserver(
       ([entry]) => {
         visibleRef.current = !!entry?.isIntersecting;
-        if (visibleRef.current) setSrc((cur) => cur ?? (window.innerWidth < 768 ? video.sm : video.lg));
+        window.clearTimeout(dwell);
+        if (visibleRef.current) {
+          if (priority) load();
+          else dwell = window.setTimeout(() => visibleRef.current && load(), DWELL_MS);
+        }
         sync();
       },
-      { rootMargin: "200px 0px" },
+      { threshold: 0.25 },
     );
     io.observe(el);
     document.addEventListener("visibilitychange", sync);
     return () => {
+      window.clearTimeout(dwell);
       // eslint-disable-next-line react-hooks/exhaustive-deps -- pause whichever element is mounted now
       videoRef.current?.pause();
       io.disconnect();
       document.removeEventListener("visibilitychange", sync);
     };
-  }, [motion, video]);
+  }, [motion, video, priority]);
 
   return (
     <div ref={wrapRef} data-reveal={reveal ? "media" : undefined} className={`relative overflow-hidden bg-graphite ${className}`}>
